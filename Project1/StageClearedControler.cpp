@@ -23,11 +23,15 @@ void StageClearedControler::Init(StageSelecter *ptr)
 
 	clearedBackSprite.Create(TexManager::LoadTexture("Resources/stageClear.png"));
 
+	if (ptr != nullptr) {
+		selecter = ptr;
+	}
+
 	//入力禁止
 	ctrl_state = CONTROL_NOT_ALLOW;
 	//最初にユーザーが選んでるやつ
 	_user_selecting = USER_SELECT_NEXT;
-	if (ptr->SelectStageNum == 20) {
+	if (selecter->SelectStageNum == 20) {
 		_user_selecting = USER_SELECT_BACK;
 	}
 
@@ -37,7 +41,8 @@ void StageClearedControler::Init(StageSelecter *ptr)
 
 	gameMainSprite.CreateRtexSprite(0);
 
-	selecter = ptr;
+
+
 
 	sepiaRate = 0.0f;
 }
@@ -75,7 +80,10 @@ void StageClearedControler::Draw(int rtHandle)
 
 void StageClearedControler::ControlActivate()
 {
+
 	if (ctrl_state != CONTROL_NOT_ALLOW) { return; }
+
+	Init(nullptr);
 
 	//演出状態に移行
 	ctrl_state = CONTROL_DIRECING;
